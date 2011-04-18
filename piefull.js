@@ -12,13 +12,17 @@ piefull = {
     size: 24,
 
     main: function(size, yescol, nocol) {
-        var piesize= size || this.size;
+        if (typeof document.querySelectorAll === 'undefined') {
+            // we don't serve your type here.
+            return;
+        }
+        var piesize = size || this.size;
         var yescol = yescol || this.yescol;
         var nocol = nocol || this.nocol;
         var startAngle=(2*Math.PI)*0.75;
         var percent_re = /(-?\d+(?:\.\d*)?(?:e[+\-]?\d+)?)%?/i;
 
-        var pies = document.getElementsByClassName('piefull');
+        var pies = document.querySelectorAll('.piefull');
         for (var i=0; i<pies.length; i++) {
             var pie = pies[i];
 
@@ -30,25 +34,28 @@ piefull = {
                 var value = percent_match[0];
                 var arclen = (2*Math.PI)*parseFloat(value)/100;
                 var canvas = document.createElement('canvas');
+                // replace element with canvas - with title
+                // containing original element text.
+                pie.parentNode.replaceChild(canvas, pie);
+                canvas.setAttribute('title',valueText);
                 canvas.width=piesize;
                 canvas.height=piesize;
+                if (typeof canvas.getContext === 'undefined') {
+                    // excanvas support
+                    canvas = window.G_vmlCanvasManager.initElement(canvas);
+                }
                 var ctx = canvas.getContext('2d');
                 var drawArc = function(full,color) {
                     ctx.beginPath();
                     ctx.moveTo(piesize/2,piesize/2);
                     ctx.arc(piesize/2,piesize/2,piesize/2,
                             startAngle,startAngle+arclen, full);
-                    ctx.closePath();
                     ctx.fillStyle=color;
                     ctx.fill();
+                    ctx.closePath();
                 }
                 drawArc(false, yescol);
                 drawArc(true, nocol);
-                // replace element with canvas - with title
-                // containing original element text.
-                canvas.setAttribute('title',valueText);
-                pie.innerHTML = "";
-                pie.appendChild(canvas);
             }
         };
     }

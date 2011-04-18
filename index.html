@@ -1,5 +1,10 @@
+<!DOCTYPE html>
 <html>
     <head>
+        <!--include excanvas for IE support-->
+        <!--[if lte IE 8]>
+          <script src="excanvas.js" type="text/javascript"></script>
+        <![endif]-->
         <script src="piefull.js" type="text/javascript"></script>
         <script>
             window.onload = (function() {
@@ -16,18 +21,24 @@
         higher than last year - the average mark was
         &lt;span class="piefull"&gt;45&lt;/span&gt; which was fairly
         &lt;span class="piefull"&gt;woeful&lt;/span&gt;.
-        </code>
+        </code>code
         <h2>into this:</h2>
-        <p>
         The test pass mark was <span class="piefull">65%</span>, which was
         <span class="piefull">ten percent (10%)</span> higher than last year
         - the average mark was <span class="piefull">45</span> which was fairly
         <span class="piefull">woeful</span>.
-        </p>
         <h2>About</h2>
         <p><em><strong>piefull</strong></em> is a fairly trivial script to allow inline pie-charts, currently representing a single value expressed as a percentage.</p>
         <p>Examples where this could be useful include resource allocation, task completion status, and so on.</p>
-        <p>Elements which have class <code>piefull</code> will have their content parsed and if something which looks like a number is found therein, the element will be <em>replaced</em> with a pie-chart canvas.</p>
+        <p>Elements which have class <code>piefull</code> will have their content parsed and if something which looks like a number is found therein, the element will be <em>replaced</em> with a pie-chart canvas. If no such number can be extracted, no change is made to the DOM.</p>
+        <h3>Notes</h3>
+        <p>IE8 is supported through the use of the <a href="http://code.google.com/p/explorercanvas/">excanvas</a> script. There are no plans to support earlier versions other than by graceful degradation. Just include something like the following in the document <code>&lt;head&gt;</code> to include excanvas:</p>
+        <blockquote><code>
+        &lt;!--[if lte IE 8]&gt;
+          &lt;script src="excanvas.js"&gt;&lt;/script&gt;
+        &lt;![endif]--&gt;
+        </code></blockquote>
+        <p>Note that when using IE8 canvas elements will not work within a <code>&lt;p&gt;</code> element. While this can probably be justified by block vs inline semantics, other browsers have no problem with it. And I'm slightly annoyed that it took me a long time to figure this out. The problem manifests as an 'Invalid source HTML for this operation' error when excanvas is attempting an '<code>insertAdjacentHTML</code>' call.</p>
         <small>Ben Bass 2011 @codedstructure</small>
     </body>
 </html>
