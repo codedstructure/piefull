@@ -7,7 +7,8 @@
  */
 
 var piefull = {
-    // default parameters
+    // default parameters.
+    selector: '.piefull',
     yescol: '#00F',
     nocol: '#0F0',
     size: 24,
@@ -16,12 +17,13 @@ var piefull = {
     PERCENT_RE: /(-?\d+(?:\.\d*)?(?:e[+\-]?\d+)?)%?/i,
     START_ANGLE: (2 * Math.PI) * 0.75,
 
-    main: function(size, yescol, nocol) {
+    main: function(selector, size, yescol, nocol) {
         var that = this;
         if (typeof document.querySelectorAll === 'undefined') {
             // we don't serve your type here...
             return;
         }
+        var _selector = selector || this.selector;
         var _piesize = size || this.size;
         var _yescol = yescol || this.yescol;
         var _nocol = nocol || this.nocol;
@@ -35,7 +37,7 @@ var piefull = {
             ctx.closePath();
         };
 
-        var pies = document.querySelectorAll('.piefull');
+        var pies = document.querySelectorAll(_selector);
         for (var i=0; i<pies.length; i++) {
             var pie = pies[i];
 
