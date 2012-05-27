@@ -30,7 +30,7 @@ var piefull = {
         var _drawArc = function(ctx, arclen, full) {
             ctx.beginPath();
             ctx.moveTo(_piesize / 2,_piesize / 2);
-            if (Math.abs(arclen) < 0.00001) {
+            if (Math.abs(arclen) < 0.000001) {
                 // some renderers optimise arclen of zero
                 // into a no-op even if direction is false
                 arclen = 0.000001;
@@ -76,8 +76,8 @@ var piefull = {
                     canvas = window.G_vmlCanvasManager.initElement(canvas);
                 }
                 var ctx = canvas.getContext('2d');
-                _drawArc(ctx, arclen, true);
                 _drawArc(ctx, arclen, false);
+                _drawArc(ctx, arclen, true);
             }
         }
     }
