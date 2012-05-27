@@ -30,6 +30,11 @@ var piefull = {
         var _drawArc = function(ctx, arclen, full) {
             ctx.beginPath();
             ctx.moveTo(_piesize / 2,_piesize / 2);
+            if (Math.abs(arclen) < 0.00001) {
+                // some renderers optimise arclen of zero
+                // into a no-op even if direction is false
+                arclen = 0.000001;
+            }
             ctx.arc(_piesize / 2,_piesize / 2, _piesize / 2,
                     that.START_ANGLE, that.START_ANGLE + arclen, !full);
             ctx.fillStyle = full ? _yescol : _nocol;

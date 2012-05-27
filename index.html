@@ -31,6 +31,7 @@
         <p>Examples where this could be useful include resource allocation, task completion status, and so on.</p>
         <p>Elements which have class <code>piefull</code> will have their content parsed and if something which looks like a number is found therein, the element will be <em>replaced</em> with a pie-chart canvas. If no such number can be extracted, no change is made to the DOM.</p>
         <h3>Notes</h3>
+        <p>Assumes positive percentages, in range 0..100 inclusive.</p>
         <p>IE8 is supported through the use of the <a href="http://code.google.com/p/explorercanvas/">excanvas</a> script. There are no plans to support earlier versions other than by graceful degradation. Just include something like the following in the document <code>&lt;head&gt;</code> to include excanvas:</p>
         <blockquote><code>
         &lt;!--[if lte IE 8]&gt;
@@ -38,6 +39,11 @@
         &lt;![endif]--&gt;
         </code></blockquote>
         <p>Note that when using IE8 canvas elements will not work within a <code>&lt;p&gt;</code> element. While this can probably be justified by block vs inline semantics, other browsers have no problem with it. And I'm slightly annoyed that it took me a long time to figure this out. The problem manifests as an 'Invalid source HTML for this operation' error when excanvas is attempting an '<code>insertAdjacentHTML</code>' call.</p>
+        <h3>Min / max test</h3>
+        <p>The following is a quick test of zero:
+        <span class="piefull">0%</span>, and 100 percent:
+        <span class="piefull">100%</span>,
+        which previously caused issues in some browsers.</p>
         <small>Ben Bass 2011 @codedstructure</small>
     </body>
 </html>
