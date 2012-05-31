@@ -31,6 +31,8 @@ var piefull = {
             if (arclen > 0.9999) {
                 // this helps excanvas to work...
                 arclen = 0.9999;
+            } else if (arclen < 0.0001) {
+                arclen = 0.0001;
             }
             ctx.beginPath();
             ctx.moveTo(_piesize / 2,_piesize / 2);
