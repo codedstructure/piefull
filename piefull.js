@@ -28,15 +28,16 @@ var piefull = {
         var _yescol = yescol || this.yescol;
         var _nocol = nocol || this.nocol;
         var _drawArc = function(ctx, arclen, full) {
+            if (arclen > 0.9999) {
+                // this helps excanvas to work...
+                arclen = 0.9999;
+            }
             ctx.beginPath();
             ctx.moveTo(_piesize / 2,_piesize / 2);
-            if (Math.abs(arclen) < 0.000001) {
-                // some renderers optimise arclen of zero
-                // into a no-op even if direction is false
-                arclen = 0.000001;
-            }
             ctx.arc(_piesize / 2,_piesize / 2, _piesize / 2,
-                    that.START_ANGLE, that.START_ANGLE + arclen, !full);
+                    that.START_ANGLE,
+                    that.START_ANGLE + arclen * 2*Math.PI,
+                    !full);
             ctx.fillStyle = full ? _yescol : _nocol;
             ctx.fill();
             ctx.closePath();
@@ -52,8 +53,8 @@ var piefull = {
             // if no percentage found, don't change anything.
             if (percent_match !== null) {
                 var value = percent_match[0];
-                // convert percentage to arc length
-                var arclen = (2*Math.PI)*parseFloat(value)/100;
+                // convert percentage to arc length (0..1)
+                var arclen = parseFloat(value)/100;
                 // create canvas element
                 var canvas = document.createElement('canvas');
                 // copy across class and id elements if present
@@ -76,8 +77,9 @@ var piefull = {
                     canvas = window.G_vmlCanvasManager.initElement(canvas);
                 }
                 var ctx = canvas.getContext('2d');
-                _drawArc(ctx, arclen, false);
+                // order of these is important, at least for excanvas
                 _drawArc(ctx, arclen, true);
+                _drawArc(ctx, arclen, false);
             }
         }
     }
